@@ -1,0 +1,78 @@
+/* Сброс отступов */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Общая структура */
+body {
+    display: flex;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+/* Sidebar */
+aside {
+    width: 250px;
+    background-color: #444648;
+    color: #fff;
+    padding: 20px;
+}
+
+/* Логотип */
+aside img {
+    max-width: 100px;     /* 🔥 главное */
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
+}
+
+/* Текст логотипа */
+.logo {
+    display: block;
+    text-align: center;
+    font-size: 20px;
+    margin-left: 10px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+aside ul {
+    list-style: none;
+    padding-left: 0;   /* 🔥 прибирає зсув вправо */
+}
+
+aside ul a {
+    text-decoration: none;
+    color: #fff;
+}
+
+aside ul li {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #2c2e30;
+    margin-bottom: 10px;
+    text-align: center;   /* 🔥 текст по центру */
+    transition: all .6s ease;
+}
+
+aside ul li:hover {
+    background-color: #1d1d1f;
+}
+
+.navigation {
+    display: block;
+    text-align: center;
+    font-size: 30px;
+    margin-left: 10px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Основной контент */
+main {
+    flex: 1;
+    padding: 20px;
+}
+

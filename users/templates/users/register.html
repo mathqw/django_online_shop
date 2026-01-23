@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>registration</title>
+</head>
+<body>
+    <h1>Реєстрація</h1>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <label>Ім'я:</label>
+        <input type="text" name="name" required>
+        <br>
+        <label>Email:</label>
+        <input type="email" name="email" required>
+        <br>
+        <label>Пароль:</label>
+        <input type="password" name="password" required>
+        <br>
+        <label>Телефон:</label>
+        <input type="text" name="phone">
+        <br>
+        <label>Місто:</label>
+        <input type="text" name="city">
+        <br>
+        <label>Країна:</label>
+        <input type="text" name="country">
+        <br>
+        <button type="submit">Зареєструватися</button>
+    </form>
+
+    <p>Вже є акаунт? <a href="{% url 'login' %}">Увійти</a></p>
+</body>
+</html>

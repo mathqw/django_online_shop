@@ -1,0 +1,15 @@
+{% extends 'online_shop/layout.html' %}
+
+{% block title %}Профіль користувача{% endblock %} 
+
+{% block users_content %}
+    <h1>Профіль користувача</h1>
+
+    <p><strong>ID:</strong> {{ user.id }}</p>
+    <p><strong>Ім'я:</strong> {{ user.name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Телефон:</strong> {{ user.phone }}</p>
+    <p><strong>Країна:</strong> {{ user.country }}</p>
+    <p><strong>Місто:</strong> {{ user.city }}</p>
+    <p><strong>Дата створення:</strong> {{ user.created_at }}</p>
+{% endblock %}
