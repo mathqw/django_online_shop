@@ -1,6 +1,6 @@
 from django.db import models
 
-class User(models.Model):
+class Shop_Users(models.Model):
     name = models.CharField(max_length=150)
     password = models.CharField(max_length=255)
     phone = models.CharField(max_length=20)

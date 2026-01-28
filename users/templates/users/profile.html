@@ -12,4 +12,9 @@
     <p><strong>Країна:</strong> {{ user.country }}</p>
     <p><strong>Місто:</strong> {{ user.city }}</p>
     <p><strong>Дата створення:</strong> {{ user.created_at }}</p>
+    {% if wallet %}
+        <p><strong>Баланс:</strong> {{ wallet.balance }} {{ wallet.currency }}</p>
+    {% else %}
+        <p>Кошелёк не создан</p>
+    {% endif %}
 {% endblock %}

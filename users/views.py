@@ -1,4 +1,5 @@
-from .models import User
+from .models import Shop_Users
+from payments.models import Wallet
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
@@ -20,10 +21,10 @@ def user_register(request):
         country = request.POST.get('country')
 
         # перевіряємо чи такий email вже існує
-        if User.objects.filter(email=email).exists():
+        if Shop_Users.objects.filter(email=email).exists():
             messages.error(request, "Користувач з таким email вже існує")
         else:
-            user = User(
+            user = Shop_Users(
                 name=name,
                 email=email,
                 password=password,  # plain text
@@ -45,20 +46,31 @@ def user_login(request):
         password = request.POST.get('password')
 
         try:
-            user = User.objects.get(email=email)
+            user = Shop_Users.objects.get(email=email)
             if user.password == password:  # порівнюємо plain text
                 request.session['user_id'] = user.id  # авторизуємо через сесію
                 return redirect('profile')
             else:
                 messages.error(request, "Неправильний пароль")
-        except User.DoesNotExist:
+        except Shop_Users.DoesNotExist:
             messages.error(request, "Користувача не знайдено")
 
     return render(request, 'users/login.html')
 
 def user_profile(request):
     user_id = request.session.get('user_id')
+
     if not user_id:
         return redirect('login')
-    user = User.objects.get(id=user_id)
-    return render(request, 'users/profile.html', {"user": user})
+
+    user = Shop_Users.objects.get(id=user_id)
+    wallet = Wallet.objects.filter(user=user).first()
+
+    return render(
+        request,
+        'users/profile.html',
+        {
+            'user': user,
+            'wallet': wallet,
+        }
+        )
