@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'users.apps.UsersConfig',
     'payments.apps.PaymentsConfig',
+    'shops.apps.ShopsConfig',
 ]
 
 MIDDLEWARE = [

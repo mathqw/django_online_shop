@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Мої товари</h2>
+
+    {% if products %}
+        <ul>
+            {% for product in products %}
+                <li>
+                    <strong>{{ product.title }}</strong><br>
+                    Ціна: {{ product.price }}<br>
+                    Кількість: {{ product.quantity }}<br>
+                    Статус:
+                    {% if product.is_active %}
+                        Активний
+                    {% else %}
+                        Неактивний
+                    {% endif %}
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>У вас ще немає товарів</p>
+    {% endif %}
+</body>
+</html>
