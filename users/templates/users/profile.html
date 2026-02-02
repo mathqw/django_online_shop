@@ -1,20 +1,155 @@
-{% extends 'online_shop/layout.html' %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профіль користувача</title>
 
-{% block title %}Профіль користувача{% endblock %} 
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
 
-{% block users_content %}
-    <h1>Профіль користувача</h1>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: url("https://hq-wallpapers.ru/wallpapers/1/hq-wallpapers_ru_nature_2259_1920x1200.jpg")
+                        no-repeat center center / cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
 
-    <p><strong>ID:</strong> {{ user.id }}</p>
-    <p><strong>Ім'я:</strong> {{ user.name }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>Телефон:</strong> {{ user.phone }}</p>
-    <p><strong>Країна:</strong> {{ user.country }}</p>
-    <p><strong>Місто:</strong> {{ user.city }}</p>
-    <p><strong>Дата створення:</strong> {{ user.created_at }}</p>
-    {% if wallet %}
-        <p><strong>Баланс:</strong> {{ wallet.balance }} {{ wallet.currency }}</p>
-    {% else %}
-        <p>Кошелёк не создан</p>
-    {% endif %}
-{% endblock %}
+        .glass {
+            width: 420px;
+            padding: 30px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 14px;
+        }
+
+        .row span:first-child {
+            opacity: 0.8;
+        }
+
+        .wallet {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .wallet.empty {
+            background: rgba(255, 0, 0, 0.25);
+            font-weight: normal;
+        }
+
+        .actions {
+            margin-top: 25px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .actions a {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            color: #000;
+            background: rgba(255, 255, 255, 0.4);
+            transition: 0.3s;
+        }
+
+        .actions a:hover {
+            background: rgba(255, 255, 255, 0.65);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glass">
+
+        {% block title %}
+            <h1>Профіль користувача</h1>
+        {% endblock %}
+
+        {% block users_content %}
+
+            <div class="row">
+                <span>ID</span>
+                <span>{{ user.id }}</span>
+            </div>
+
+            <div class="row">
+                <span>Ім'я</span>
+                <span>{{ user.name }}</span>
+            </div>
+
+            <div class="row">
+                <span>Email</span>
+                <span>{{ user.email }}</span>
+            </div>
+
+            <div class="row">
+                <span>Телефон</span>
+                <span>{{ user.phone|default:"—" }}</span>
+            </div>
+
+            <div class="row">
+                <span>Країна</span>
+                <span>{{ user.country|default:"—" }}</span>
+            </div>
+
+            <div class="row">
+                <span>Місто</span>
+                <span>{{ user.city|default:"—" }}</span>
+            </div>
+
+            <div class="row">
+                <span>Дата створення</span>
+                <span>{{ user.created_at }}</span>
+            </div>
+
+            {% if wallet %}
+                <div class="wallet">
+                    💳 Баланс: {{ wallet.balance }} {{ wallet.currency }}
+                </div>
+            {% else %}
+                <div class="wallet empty">
+                    Кошельок не створений
+                </div>
+            {% endif %}
+
+            <div class="actions">
+                <a href="#">Вийти</a>
+            </div>
+
+        {% endblock %}
+
+    </div>
+
+</body>
+</html>

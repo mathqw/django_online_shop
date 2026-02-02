@@ -1,32 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h2>Мої товари</h2>
+{% extends "layout.html" %}
 
-    {% if products %}
-        <ul>
-            {% for product in products %}
-                <li>
-                    <strong>{{ product.title }}</strong><br>
-                    Ціна: {{ product.price }}<br>
-                    Кількість: {{ product.quantity }}<br>
-                    Статус:
-                    {% if product.is_active %}
-                        Активний
-                    {% else %}
-                        Неактивний
-                    {% endif %}
-                </li>
-                <hr>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>У вас ще немає товарів</p>
-    {% endif %}
-</body>
-</html>
+{% block title %}Мої товари{% endblock %}
+
+{% block header_title %}
+    Мої товари
+{% endblock %}
+
+{% block users_content %}
+{% if products %}
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.title }}</h5>
+
+                        <p class="card-text">
+                            <strong>Ціна:</strong> {{ product.price }} <br>
+                            <strong>Кількість:</strong> {{ product.quantity }}
+                        </p>
+
+                        {% if product.is_active %}
+                            <span class="badge bg-success">Активний</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Неактивний</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>У вас ще немає товарів</p>
+{% endif %}
+
+{% endblock %}
+
