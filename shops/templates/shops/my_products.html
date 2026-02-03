@@ -20,11 +20,63 @@
                             <strong>Кількість:</strong> {{ product.quantity }}
                         </p>
 
-                        {% if product.is_active %}
-                            <span class="badge bg-success">Активний</span>
-                        {% else %}
-                            <span class="badge bg-secondary">Неактивний</span>
-                        {% endif %}
+                        <p class="card-text">
+                            {{ product.description|truncatechars:100 }}
+                        </p>
+
+                        <form method="post" action="{% url 'toggle_product' product.id %}" class="mb-2">
+                            {% csrf_token %}
+
+                            {% if product.is_active %}
+                                <button type="submit" class="btn btn-success btn-sm w-100">
+                                    ✅ Активний (натисни, щоб вимкнути)
+                                </button>
+                            {% else %}
+                                <button type="submit" class="btn btn-secondary btn-sm w-100">
+                                    ⛔ Неактивний (натисни, щоб увімкнути)
+                                </button>
+                            {% endif %}
+                        </form>
+
+                        <button 
+                            type="button"
+                            class="btn btn-danger btn-sm w-100"
+                            data-bs-toggle="modal"
+                            data-bs-target="#deleteModal{{ product.id }}">
+                            🗑 Видалити товар
+                        </button>
+                        <div class="modal fade" id="deleteModal{{ product.id }}" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Підтвердження видалення</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                <div class="modal-body">
+                                    Ви впевнені, що хочете видалити товар:
+                                    <strong>{{ product.title }}</strong>?
+                                    <br>
+                                    Цю дію неможливо скасувати.
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    Скасувати
+                                    </button>
+
+                                    <form method="post" action="{% url 'delete_product' product.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">
+                                        Так, видалити
+                                    </button>
+                                    </form>
+                                </div>
+
+                                </div>
+                            </div>
+                            </div>
                     </div>
                 </div>
             </div>

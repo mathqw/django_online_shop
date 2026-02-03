@@ -1,19 +1,169 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Додати товар</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: url("https://hq-wallpapers.ru/wallpapers/1/hq-wallpapers_ru_nature_2259_1920x1200.jpg")
+                no-repeat center center / cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .glass {
+            width: 520px;
+            padding: 30px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            color: #fff;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            margin-top: 14px;
+            font-size: 14px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            background: rgba(255, 255, 255, 0.25);
+            color: #fff;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #e0e0e0;
+        }
+
+        .checkbox {
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 24px;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.4);
+            color: #000;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.65);
+        }
+
+        .errorlist {
+            list-style: none;
+            padding: 0;
+            margin: 8px 0 0;
+        }
+
+        .errorlist li {
+            background: rgba(255, 0, 0, 0.35);
+            padding: 8px;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+    </style>
 </head>
+<script>
+    function toggleActive() {
+        const input = document.getElementById('is_active_input');
+        const btn = document.getElementById('toggleActiveBtn');
+
+        if (input.value === "1") {
+            input.value = "0";
+            btn.classList.remove('btn-success');
+            btn.classList.add('btn-secondary');
+            btn.innerText = "⛔ Неактивний товар";
+        } else {
+            input.value = "1";
+            btn.classList.remove('btn-secondary');
+            btn.classList.add('btn-success');
+            btn.innerText = "✅ Активний товар";
+        }
+    }
+</script>
 <body>
-    <h2>Додавання товару</h2>
 
-    <form method="post">
-    {% csrf_token %}
+    <div class="glass">
+        <h1>Додати товар</h1>
 
-    {{ form.as_p }}
+        <form method="post" novalidate>
+            {% csrf_token %}
 
-    <button type="submit">Додати товар</button>
-</form>
+            <label>Назва товару</label>
+            {{ form.title }}
+            {{ form.title.errors }}
+
+            <label>Опис товару</label>
+            {{ form.description }}
+            {{ form.description.errors }}
+
+            <label>Ціна</label>
+            {{ form.price }}
+            {{ form.price.errors }}
+
+            <label>Кількість</label>
+            {{ form.quantity }}
+            {{ form.quantity.errors }}
+
+            <input type="hidden" name="is_active" id="is_active_input" value="1">
+
+            <button 
+                type="button"
+                id="toggleActiveBtn"
+                class="btn btn-success w-100 mt-3"
+                onclick="toggleActive()">
+                ✅ Активний товар
+            </button>
+
+            {{ form.is_active.errors }}
+
+            <button type="submit">
+                ➕ Додати товар
+            </button>
+        </form>
+    </div>
+
 </body>
 </html>
