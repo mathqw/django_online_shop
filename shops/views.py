@@ -39,7 +39,7 @@ def my_products(request):
 
     user = Shop_Users.objects.get(id=user_id)
 
-    products = Product.objects.filter(owner=user)
+    products = Product.objects.filter(owner=user).select_related('category')
 
     return render(
         request,

@@ -12,9 +12,26 @@
         {% for product in products %}
             <div class="col-md-4 mb-4">
                 <div class="card shadow-sm h-100">
+                    {% if product.image %}
+                        <img 
+                            src="{{ product.image.url }}" 
+                            class="card-img-top"
+                            style="height: 200px; object-fit: cover;"
+                            alt="{{ product.title }}"
+                        >
+                    {% else %}
+                        <img 
+                            src="https://via.placeholder.com/300x200?text=No+Image"
+                            class="card-img-top"
+                            style="height: 200px; object-fit: cover;"
+                        >
+                    {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ product.title }}</h5>
-
+                        <p class="card-text">
+                            <strong>Категорія:</strong> 
+                            {{ product.category.name|default:"Без категорії" }}
+                        </p>
                         <p class="card-text">
                             <strong>Ціна:</strong> {{ product.price }} <br>
                             <strong>Кількість:</strong> {{ product.quantity }}

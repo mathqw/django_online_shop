@@ -128,7 +128,7 @@
     <div class="glass">
         <h1>Додати товар</h1>
 
-        <form method="post" novalidate>
+        <form method="post" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
 
             <label>Назва товару</label>
@@ -146,6 +146,14 @@
             <label>Кількість</label>
             {{ form.quantity }}
             {{ form.quantity.errors }}
+
+            <label>Категорія</label>
+            {{ form.category }}
+            {{ form.category.errors }}
+
+            <label>Фото товару</label>
+            {{ form.image }}
+            {{ form.image.errors }}
 
             <input type="hidden" name="is_active" id="is_active_input" value="1">
 
