@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}Кошик{% endblock %}
+{% block header_title %}Кошик{% endblock %}
+
+{% block users_content %}
+{% if cart.items.all %}
+    <table class="table table-striped text-white">
+        <thead>
+            <tr>
+                <th>Товар</th>
+                <th>Ціна</th>
+                <th>Кількість</th>
+                <th>Сума</th>
+                <th>Дія</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart.items.all %}
+            <tr>
+                <td>{{ item.product.title }}</td>
+                <td>{{ item.product.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.total_price }}</td>
+                <td>
+                    <a href="{% url 'cart:remove_from_cart' item.id %}" class="btn btn-danger btn-sm">❌</a>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="3"><strong>Загальна сума</strong></td>
+                <td colspan="2"><strong>{{ cart.total_price }}</strong></td>
+            </tr>
+        </tbody>
+    </table>
+{% else %}
+    <p>Ваш кошик порожній</p>
+{% endif %}
+{% endblock %}

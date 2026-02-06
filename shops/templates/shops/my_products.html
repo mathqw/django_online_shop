@@ -12,27 +12,34 @@
         {% for product in products %}
             <div class="col-md-4 mb-4">
                 <div class="card shadow-sm h-100">
+
+                    <!-- Картинка товару -->
                     {% if product.image %}
                         <img 
                             src="{{ product.image.url }}" 
                             class="card-img-top"
-                            style="height: 200px; object-fit: cover;"
                             alt="{{ product.title }}"
+                            style="height: 200px; object-fit: cover;"
                         >
                     {% else %}
                         <img 
-                            src="https://via.placeholder.com/300x200?text=No+Image"
+                            src="https://dummyimage.com/600x400/e5e7eb/6b7280&text=No+Image"
                             class="card-img-top"
+                            alt="No image"
                             style="height: 200px; object-fit: cover;"
                         >
                     {% endif %}
-                    <div class="card-body">
+
+                    <div class="card-body d-flex flex-column">
+
                         <h5 class="card-title">{{ product.title }}</h5>
-                        <p class="card-text">
+
+                        <p class="card-text mb-1">
                             <strong>Категорія:</strong> 
                             {{ product.category.name|default:"Без категорії" }}
                         </p>
-                        <p class="card-text">
+
+                        <p class="card-text mb-1">
                             <strong>Ціна:</strong> {{ product.price }} <br>
                             <strong>Кількість:</strong> {{ product.quantity }}
                         </p>
@@ -41,20 +48,22 @@
                             {{ product.description|truncatechars:100 }}
                         </p>
 
-                        <form method="post" action="{% url 'toggle_product' product.id %}" class="mb-2">
+                        <!-- Активність товару -->
+                        <form method="post" action="{% url 'toggle_product' product.id %}" class="mt-auto mb-2">
                             {% csrf_token %}
 
                             {% if product.is_active %}
                                 <button type="submit" class="btn btn-success btn-sm w-100">
-                                    ✅ Активний (натисни, щоб вимкнути)
+                                    Активний (натисни, щоб вимкнути)
                                 </button>
                             {% else %}
                                 <button type="submit" class="btn btn-secondary btn-sm w-100">
-                                    ⛔ Неактивний (натисни, щоб увімкнути)
+                                    Неактивний (натисни, щоб увімкнути)
                                 </button>
                             {% endif %}
                         </form>
 
+                        <!-- Видалення товару -->
                         <button 
                             type="button"
                             class="btn btn-danger btn-sm w-100"
@@ -62,38 +71,40 @@
                             data-bs-target="#deleteModal{{ product.id }}">
                             🗑 Видалити товар
                         </button>
+
                         <div class="modal fade" id="deleteModal{{ product.id }}" tabindex="-1">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
 
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Підтвердження видалення</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Підтвердження видалення</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
 
-                                <div class="modal-body">
-                                    Ви впевнені, що хочете видалити товар:
-                                    <strong>{{ product.title }}</strong>?
-                                    <br>
-                                    Цю дію неможливо скасувати.
-                                </div>
+                                    <div class="modal-body">
+                                        Ви впевнені, що хочете видалити товар:
+                                        <strong>{{ product.title }}</strong>?
+                                        <br>
+                                        Цю дію неможливо скасувати.
+                                    </div>
 
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                    Скасувати
-                                    </button>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Скасувати
+                                        </button>
 
-                                    <form method="post" action="{% url 'delete_product' product.id %}">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger">
-                                        Так, видалити
-                                    </button>
-                                    </form>
-                                </div>
+                                        <form method="post" action="{% url 'delete_product' product.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger">
+                                                Так, видалити
+                                            </button>
+                                        </form>
+                                    </div>
 
                                 </div>
                             </div>
-                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -104,4 +115,3 @@
 {% endif %}
 
 {% endblock %}
-

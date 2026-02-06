@@ -81,3 +81,19 @@ def toggle_product_active(request, product_id):
         product.save()
 
     return redirect('my_products')
+
+def all_products(request):
+    user_id = request.session.get('user_id')
+    if not user_id:
+        return redirect('login')
+
+    user = Shop_Users.objects.get(id=user_id)
+
+    products = Product.objects.filter(is_active=True)\
+        .select_related('category', 'owner')\
+        .order_by('-created_at')
+
+    return render(request, 'shops/all_products.html', {
+        'products': products,
+        'user': user
+    })

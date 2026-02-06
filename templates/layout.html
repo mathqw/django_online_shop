@@ -29,7 +29,6 @@
             overflow-x: hidden;
         }
 
-        /* SIDEBAR */
         .sidebar {
             width: 260px;
             padding: 25px 20px;
@@ -46,13 +45,13 @@
         }
 
         .brand img {
-            width: 55px;   /* було 40 */
+            width: 55px;   
             height: 55px;
             object-fit: contain;
         }
 
         .brand span {
-            font-size: 22px;   /* було 18 */
+            font-size: 22px;  
             font-weight: 700;
             letter-spacing: 1px;
         }
@@ -171,16 +170,16 @@
         </div>
 
         <nav>
-            <a href="/user/profile">👤 Профіль</a>
-            <a href="/products/add">➕ Додати товар</a>
-            <a href="/products/my">📦 Мої товари</a>
+            <a href="/products/all"> Головна</a>
+            <a href="/user/profile"> Профіль</a>
+            <a href="/products/add"> Додати товар</a>
+            <a href="/products/my"> Мої товари</a>
+            <a href="/cart"> Кошик</a>
         </nav>
     </aside>
 
-    <!-- MAIN CONTENT -->
     <div class="content">
 
-        <!-- HEADER -->
         <header class="header">
             <div class="left">
                 {% block header_title %}{% endblock %}
@@ -197,12 +196,11 @@
                     </span>
                 </div>
 
-                <a href="/logout" class="logout">Вийти</a>
+                <a href="{% url 'login' %}" class="logout">Вийти</a>
 
             </div>
         </header>
 
-        <!-- PAGE CONTENT -->
         <main class="main">
             {% block users_content %}{% endblock %}
         </main>

@@ -144,11 +144,11 @@
             {% endif %}
 
             <div class="actions">
-                <a href="#">Вийти</a>
+                <a href="{% url 'login' %}" >Вийти</a>
             </div>
 
             <div class="actions">
-                <a href="#">На головну</a>
+                <a href="{% url 'all_products' %}" >На головну</a>
             </div>
 
         {% endblock %}
