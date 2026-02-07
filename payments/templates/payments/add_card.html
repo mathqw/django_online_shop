@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}Додати картку{% endblock %}
+{% block header_title %}Прив'язка картки{% endblock %}
+
+{% block users_content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+
+        <div class="card shadow">
+            <div class="card-body">
+
+                <h4 class="mb-4 text-center">
+                    💳 Додати банківську картку
+                </h4>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label">Назва картки</label>
+                        {{ form.card_name }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Номер картки</label>
+                        {{ form.card_number }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Тип картки</label>
+                        {{ form.card_type }}
+                    </div>
+
+                    <button class="btn btn-primary w-100">
+                        ➕ Додати картку
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

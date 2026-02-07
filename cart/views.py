@@ -53,7 +53,7 @@ def add_to_cart(request, product_id):
     if created:
         item.quantity = quantity
     else:
-        item.quantity += quantity   # 🔥 ОСЬ ГОЛОВНЕ ВИПРАВЛЕННЯ
+        item.quantity += quantity  
 
     item.save()
 
