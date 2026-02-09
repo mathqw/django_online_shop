@@ -20,14 +20,13 @@ def user_register(request):
         city = request.POST.get('city')
         country = request.POST.get('country')
 
-        # перевіряємо чи такий email вже існує
         if Shop_Users.objects.filter(email=email).exists():
             messages.error(request, "Користувач з таким email вже існує")
         else:
             user = Shop_Users(
                 name=name,
                 email=email,
-                password=password,  # plain text
+                password=password,
                 phone=phone,
                 city=city,
                 country=country
@@ -47,8 +46,8 @@ def user_login(request):
 
         try:
             user = Shop_Users.objects.get(email=email)
-            if user.password == password:  # порівнюємо plain text
-                request.session['user_id'] = user.id  # авторизуємо через сесію
+            if user.password == password:  
+                request.session['user_id'] = user.id  
                 return redirect('profile')
             else:
                 messages.error(request, "Неправильний пароль")

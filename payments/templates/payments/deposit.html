@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}Поповнити гаманець{% endblock %}
+{% block header_title %}Поповнення гаманця{% endblock %}
+
+{% block users_content %}
+
+<div class="card p-4 shadow-sm" style="max-width: 400px;">
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button class="btn btn-success w-100">
+            💳 Поповнити
+        </button>
+    </form>
+</div>
+
+{% endblock %}

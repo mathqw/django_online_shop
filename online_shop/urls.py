@@ -28,6 +28,7 @@ urlpatterns = [
     path('products/', include('shops.urls')),
     path('cart/', include('cart.urls')),
     path('payments/', include('payments.urls')),
+    path('orders/', include('orders.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
   + debug_toolbar_urls()

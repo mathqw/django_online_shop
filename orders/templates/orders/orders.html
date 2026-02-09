@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}Замовлення{% endblock %}
+{% block header_title %}Замовлення продавця{% endblock %}
+
+{% block users_content %}
+
+<h2>Нові замовлення</h2>
+
+{% if orders %}
+    <table class="table text-white">
+        <thead>
+            <tr>
+                <th>Покупець</th>
+                <th>Товар</th>
+                <th>Кількість</th>
+                <th>Сума</th>
+                <th>Дія</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for order in orders %}
+            {% for item in order.items.all %}
+            <tr>
+                <td>{{ order.buyer.name }}</td>
+                <td>{{ item.product.title }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price }}</td>
+
+                <td>
+                    {% if order.status == "PENDING" %}
+                        <a href="{% url 'orders:accept_order' order.id %}">
+                            <button class="btn btn-success">
+                                Підтвердити
+                            </button>
+                        </a>
+                    {% elif order.status == "ACCEPTED" %}
+                        ✅ Прийнято
+                    {% endif %}
+                </td>
+
+            </tr>
+            {% endfor %}
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+{% else %}
+    <p>Замовлень поки немає</p>
+{% endif %}
+
+{% endblock %}

@@ -4,6 +4,7 @@
 {% block header_title %}Кошик{% endblock %}
 
 {% block users_content %}
+
 {% if cart.items.all %}
     <table class="table table-striped text-white">
         <thead>
@@ -16,6 +17,7 @@
             </tr>
         </thead>
         <tbody>
+
             {% for item in cart.items.all %}
             <tr>
                 <td>{{ item.product.title }}</td>
@@ -23,17 +25,53 @@
                 <td>{{ item.quantity }}</td>
                 <td>{{ item.total_price }}</td>
                 <td>
-                    <a href="{% url 'cart:remove_from_cart' item.id %}" class="btn btn-danger btn-sm">❌</a>
+                    <a href="{% url 'cart:remove_from_cart' item.id %}"
+                       class="btn btn-danger btn-sm">❌</a>
                 </td>
             </tr>
             {% endfor %}
+
             <tr>
                 <td colspan="3"><strong>Загальна сума</strong></td>
                 <td colspan="2"><strong>{{ cart.total_price }}</strong></td>
             </tr>
+
         </tbody>
     </table>
+
+    <div style="margin-top:20px;">
+
+        {% if order %}
+
+            {% if order.status == "PENDING" %}
+                <button class="btn btn-secondary" disabled>
+                    Очікуємо продавця
+                </button>
+
+            {% elif order.status == "ACCEPTED" %}
+                <a href="{% url 'orders:complete_order' order.id %}">
+                    <button class="btn btn-success">
+                        Завершити замовлення
+                    </button>
+                </a>
+
+            {% endif %}
+
+        {% else %}
+
+            <form method="post" action="{% url 'orders:create_order' %}">
+                {% csrf_token %}
+                <button class="btn btn-primary">
+                    Зробити замовлення
+                </button>
+            </form>
+
+        {% endif %}
+
+    </div>
+
 {% else %}
     <p>Ваш кошик порожній</p>
 {% endif %}
+
 {% endblock %}

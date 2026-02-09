@@ -31,3 +31,14 @@ class CardForm(forms.ModelForm):
             card.save()
 
         return card
+    
+from django import forms
+from .models import Card
+
+class DepositForm(forms.Form):
+    card = forms.ModelChoiceField(queryset=None, label="Картка")
+    amount = forms.DecimalField(max_digits=10, decimal_places=2, min_value=1, label="Сума поповнення")
+
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['card'].queryset = Card.objects.filter(user=user, is_active=True)

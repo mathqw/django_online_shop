@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Cart, CartItem
 from users.models import Shop_Users
 from shops.models import Product
+from orders.models import Order
 
 def cart_view(request):
     user_id = request.session.get('user_id')
@@ -16,6 +17,11 @@ def cart_view(request):
     products = Product.objects.filter(is_active=True)\
         .select_related('category', 'owner')\
         .order_by('-created_at')
+    
+    active_order = Order.objects.filter(
+    buyer=user,
+    status__in=['PENDING', 'ACCEPTED']
+    ).first()
 
     cart, _ = Cart.objects.get_or_create(user=user)
     return render(
@@ -25,6 +31,7 @@ def cart_view(request):
             'user': user,
             'products': products,
             'cart': cart,
+            'order': active_order,
         }
     )
 

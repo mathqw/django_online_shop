@@ -3,7 +3,7 @@ from django.db import models
 
 class Wallet(models.Model):
     user = models.OneToOneField(
-        'users.Shop_Users',  # <-- строковая ссылка вместо импорта
+        'users.Shop_Users',  
         on_delete=models.CASCADE,
         related_name='wallet'
     )
@@ -57,7 +57,7 @@ class Transaction(models.Model):
     )
 
     user = models.ForeignKey(
-        'users.Shop_Users',  # <-- строковая ссылка
+        'users.Shop_Users', 
         on_delete=models.CASCADE
     )
     wallet = models.ForeignKey(

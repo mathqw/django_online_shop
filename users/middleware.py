@@ -12,11 +12,10 @@ class LoginRequiredMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        # Сторінки, де не потрібна авторизація
         excluded_paths = [
-            reverse('login'),      # твій URL name для логіну
-            reverse('register'),   # твій URL name для реєстрації
-            '/admin/',             # якщо є адмінка
+            reverse('login'),     
+            reverse('register'),   
+            '/admin/',            
         ]
 
         if not request.user.is_authenticated:
