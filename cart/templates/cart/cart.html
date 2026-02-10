@@ -42,8 +42,15 @@
     <div style="margin-top:20px;">
 
         {% if order %}
+            {% if order.status == "CART" %}
+                <form method="post" action="{% url 'orders:create_order' %}">
+                    {% csrf_token %}
+                    <button class="btn btn-primary">
+                        Зробити замовлення
+                    </button>
+                </form>
 
-            {% if order.status == "PENDING" %}
+            {% elif order.status == "PENDING" %}
                 <button class="btn btn-secondary" disabled>
                     Очікуємо продавця
                 </button>

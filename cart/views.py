@@ -19,8 +19,8 @@ def cart_view(request):
         .order_by('-created_at')
     
     active_order = Order.objects.filter(
-    buyer=user,
-    status__in=['PENDING', 'ACCEPTED']
+        buyer=user,
+        status__in=['CART', 'PENDING', 'ACCEPTED']
     ).first()
 
     cart, _ = Cart.objects.get_or_create(user=user)

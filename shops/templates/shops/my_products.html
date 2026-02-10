@@ -13,7 +13,6 @@
             <div class="col-md-4 mb-4">
                 <div class="card shadow-sm h-100">
 
-                    <!-- Картинка товару -->
                     {% if product.image %}
                         <img 
                             src="{{ product.image.url }}" 
@@ -48,7 +47,6 @@
                             {{ product.description|truncatechars:100 }}
                         </p>
 
-                        <!-- Активність товару -->
                         <form method="post" action="{% url 'toggle_product' product.id %}" class="mt-auto mb-2">
                             {% csrf_token %}
 
@@ -63,7 +61,6 @@
                             {% endif %}
                         </form>
 
-                        <!-- Видалення товару -->
                         <button 
                             type="button"
                             class="btn btn-danger btn-sm w-100"

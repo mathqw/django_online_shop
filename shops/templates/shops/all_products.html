@@ -55,7 +55,6 @@
                                     {{ product.price }} грн
                                 </p>
 
-                                <!-- Форма додавання до кошика -->
                                 <form method="post" action="{% url 'cart:add_to_cart' product.id %}">
                                     {% csrf_token %}
                                     <div class="mb-2">

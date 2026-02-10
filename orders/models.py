@@ -7,6 +7,7 @@ from shops.models import Product
 class Order(models.Model):
 
     STATUS_CHOICES = [
+        ('CART', 'У кошику'),
         ('PENDING', 'Очікує підтвердження'),
         ('ACCEPTED', 'Прийнято продавцем'),
         ('COMPLETED', 'Завершено'),
@@ -23,7 +24,7 @@ class Order(models.Model):
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
-        default='PENDING'
+        default='CART'
     )
 
     def __str__(self):

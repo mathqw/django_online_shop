@@ -6,7 +6,6 @@ from .models import Order, OrderItem
 from cart.models import Cart
 from users.models import Shop_Users
 
-
 def create_order(request):
 
     user_id = request.session.get('user_id')
@@ -29,7 +28,10 @@ def create_order(request):
     if active_order:
         return redirect('cart:cart_view')
 
-    order = Order.objects.create(buyer=user)
+    order = Order.objects.create(
+        buyer=user,
+        status='PENDING'
+    )
 
     for item in items:
         OrderItem.objects.create(
@@ -37,14 +39,21 @@ def create_order(request):
             product=item.product,
             seller=item.product.owner,
             quantity=item.quantity,
-            price=item.product.price
+            price=item.product.price,
+            status='PENDING'  
         )
 
     items.delete()
 
     return redirect('cart:cart_view')
 
+
 def seller_orders(request):
+    user_id = request.session.get('user_id')
+    if not user_id:
+        return redirect('login')
+
+    user = Shop_Users.objects.get(id=user_id)
     user_id = request.session.get('user_id')
     if not user_id:
         return redirect('login')
@@ -59,7 +68,8 @@ def seller_orders(request):
         request,
         'orders/orders.html',
         {
-            'orders': orders
+            'orders': orders,
+            'user': user
         }
     )
 
