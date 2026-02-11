@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Order, OrderItem
 from cart.models import Cart
 from users.models import Shop_Users
+from payments.models import Wallet
 
 def create_order(request):
 
@@ -42,7 +43,7 @@ def create_order(request):
             price=item.product.price, 
         )
 
-    items.delete()
+    # items.delete()
 
     return redirect('cart:cart_view')
 
@@ -93,13 +94,33 @@ def accept_order(request, order_id):
     return redirect('orders:seller_orders')
 
 def complete_order(request, order_id):
+    user_id = request.session.get('user_id')
+    if not user_id:
+        return redirect('login')
 
+    user = Shop_Users.objects.get(id=user_id)
+    user_id = request.session.get('user_id')
+    if not user_id:
+        return redirect('login')
+
+    cart = get_object_or_404(Cart, user=user)
+    items = cart.items.all()
+    user_wallet = get_object_or_404(Wallet, user_id=user_id)    
     order = get_object_or_404(Order, id=order_id)
+    order_item = get_object_or_404(OrderItem, id=order_id)
 
     if order.status != 'ACCEPTED':
         return redirect('cart:cart_view')
-
+ 
     order.status = 'COMPLETED'
+    total_price = 0
+    for item in order.items.all():
+        total_price += item.price*order_item.quantity
+
+    user_wallet.balance -= total_price
+    user_wallet.save()
     order.save()
+    items.delete()
+
 
     return redirect('cart:cart_view')
