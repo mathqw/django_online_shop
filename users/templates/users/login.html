@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -14,7 +15,7 @@
         body {
             margin: 0;
             height: 100vh;
-            background: url("https://www.skyweaver.net/images/media/wallpapers/wallpaper2.jpg") no-repeat center center / cover;
+            background: url("{% static 'users/img/base_background.webp' %}") no-repeat center center / cover;
             display: flex;
             align-items: center;
             justify-content: center;
