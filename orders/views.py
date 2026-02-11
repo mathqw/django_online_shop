@@ -39,8 +39,7 @@ def create_order(request):
             product=item.product,
             seller=item.product.owner,
             quantity=item.quantity,
-            price=item.product.price,
-            status='PENDING'  
+            price=item.product.price, 
         )
 
     items.delete()
